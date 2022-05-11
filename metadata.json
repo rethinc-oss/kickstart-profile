@@ -1,0 +1,25 @@
+{
+  "name": "rethinc-puppet-profiles",
+  "version": "0.1.0",
+  "author": "Rethinc - Software Engineering Services",
+  "summary": "Corporate Puppet Profiles Module",
+  "license": "proprietary",
+  "source": "https://github.com/rethinc-oss/puppet-profiles",
+  "dependencies": [
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 6.21.0 < 8.0.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": ["22.04","20.04"]
+    }
+  ],
+  "pdk-version": "0.5.0-d365a90",
+  "template-url": "https://github.com/puppetlabs/baker-round",
+  "template-ref": "0.1.0"
+}
