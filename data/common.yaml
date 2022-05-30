@@ -9,3 +9,5 @@ puppet_profiles::base::ubuntu::keyboard_variant: "nodeadkeys"
 puppet_profiles::base::ubuntu::keyboard_options: ""
 puppet_profiles::base::ubuntu::locales_available: ["en_US.UTF-8 UTF-8"]
 puppet_profiles::base::ubuntu::locales_default: "en_US.UTF-8"
+puppet_profiles::base::ubuntu::timedate_timezone: "Europe/Berlin"
+puppet_profiles::base::ubuntu::timedate_rtc_utc: true

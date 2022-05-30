@@ -30,6 +30,10 @@
 #   The system locales available.
 # @param locales_available
 #   The default active system locale.
+# @param timedate_timezone
+#   The system timezone.
+# @param ltimedate_rtc_utc
+#   If the Hardware RTC is set to UTC time.
 #
 # @see https://www.freedesktop.org/software/systemd/man/systemd.timer.html#OnCalendar=
 # @see https://www.freedesktop.org/software/systemd/man/systemd.timer.html#RandomizedDelaySec=
@@ -45,6 +49,8 @@ class puppet_profiles::base::ubuntu (
   String        $keyboard_options,
   Array[String] $locales_available,
   String        $locales_default,
+  String        $timedate_timezone,
+  Boolean       $timedate_rtc_utc,
 
 ){
   assert_private("Use of private class ${name} by ${caller_module_name}")
@@ -164,4 +170,41 @@ class puppet_profiles::base::ubuntu (
     refreshonly => true,
     require     => Package[$locales_pkgs],
   }
+
+  #############################################################################
+  ### Configure the timezone and set up NTP time synchronization
+  #############################################################################
+
+  if $facts['timezone'] != $timedate_timezone {
+    exec { 'timedate::apply::timezone':
+      command => "/usr/bin/timedatectl set-timezone ${timedate_timezone}",
+      before  => Service['systemd-timesyncd'],
+    }
+  }
+
+  if $facts['rtcutc'] != $timedate_rtc_utc {
+    exec { 'timedate::apply::rtc-is-utc':
+      command => "/usr/bin/timedatectl set-local-rtc ${!$timedate_rtc_utc}",
+      before  => Service['systemd-timesyncd'],
+    }
+  }
+
+  service { 'systemd-timesyncd':
+    ensure   => false,
+    provider => 'systemd',
+    enable   => false,
+  }
+
+  class { '::chrony':
+    servers          => {
+      'ptbtime1.ptb.de' => ['iburst'],
+      'ptbtime2.ptb.de' => ['iburst'],
+      'ptbtime3.ptb.de' => ['iburst'],
+      'de.pool.ntp.org' => ['iburst'],
+    },
+    makestep_updates => -1,
+    makestep_seconds => 1,
+  }
+
+  Service['systemd-timesyncd'] -> Class['::chrony']
 }
