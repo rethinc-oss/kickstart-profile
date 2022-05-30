@@ -1,0 +1,619 @@
+{
+  "aio_agent_version": "7.16.0",
+  "architecture": "aarch64",
+  "augeas": {
+    "version": "1.12.0"
+  },
+  "augeasversion": "1.12.0",
+  "bios_release_date": "12/31/2020",
+  "bios_vendor": "VMware",
+  "bios_version": "VEFI",
+  "blockdevice_nvme0n1_model": "VMware Virtual NVMe Disk",
+  "blockdevice_nvme0n1_size": 10737418240,
+  "blockdevice_sr0_model": "VMware SATA CD00",
+  "blockdevice_sr0_size": 1073741312,
+  "blockdevice_sr0_vendor": "NECVMWar",
+  "blockdevices": "nvme0n1,sr0",
+  "boardmanufacturer": "VMware",
+  "boardproductname": "VBSA",
+  "chassistype": "Other",
+  "dhcp_servers": {
+    "enp1s1": "192.168.188.254",
+    "system": "192.168.188.254"
+  },
+  "disks": {
+    "nvme0n1": {
+      "model": "VMware Virtual NVMe Disk",
+      "serial": "VMware NVME_0000",
+      "size": "10.00 GiB",
+      "size_bytes": 10737418240,
+      "type": "ssd",
+      "wwn": "eui.3ac1cb8f1743074e000c296254c76f2f"
+    },
+    "sr0": {
+      "model": "VMware SATA CD00",
+      "serial": "00000000000000000001",
+      "size": "1.00 GiB",
+      "size_bytes": 1073741312,
+      "type": "hdd",
+      "vendor": "NECVMWar"
+    }
+  },
+  "dmi": {
+    "bios": {
+      "release_date": "12/31/2020",
+      "vendor": "VMware",
+      "version": "VEFI"
+    },
+    "board": {
+      "manufacturer": "VMware",
+      "product": "VBSA"
+    },
+    "chassis": {
+      "type": "Other"
+    },
+    "manufacturer": "VMware, Inc.",
+    "product": {
+      "name": "VBSA"
+    }
+  },
+  "domain": "localdev",
+  "facterversion": "4.2.8",
+  "filesystems": "btrfs,ext2,ext3,ext4,squashfs,vfat",
+  "fips_enabled": false,
+  "fqdn": "template.localdev",
+  "gid": "sysop",
+  "hardwareisa": "aarch64",
+  "hardwaremodel": "aarch64",
+  "hostname": "template",
+  "hypervisors": {
+    "vmware": {
+    }
+  },
+  "id": "sysop",
+  "identity": {
+    "gid": 1001,
+    "group": "sysop",
+    "privileged": false,
+    "uid": 1000,
+    "user": "sysop"
+  },
+  "interfaces": "enp1s1,lo",
+  "ipaddress": "192.168.188.218",
+  "ipaddress6": "fe80::20c:29ff:fe69:6029",
+  "ipaddress6_enp1s1": "fe80::20c:29ff:fe69:6029",
+  "ipaddress6_lo": "::1",
+  "ipaddress_enp1s1": "192.168.188.218",
+  "ipaddress_lo": "127.0.0.1",
+  "is_virtual": true,
+  "kernel": "Linux",
+  "kernelmajversion": "5.13",
+  "kernelrelease": "5.13.19-051319-generic",
+  "kernelversion": "5.13.19",
+  "load_averages": {
+    "15m": 0.0,
+    "1m": 0.06,
+    "5m": 0.02
+  },
+  "lsbdistcodename": "jammy",
+  "lsbdistdescription": "Ubuntu 22.04 LTS",
+  "lsbdistid": "Ubuntu",
+  "lsbdistrelease": "22.04",
+  "lsbmajdistrelease": "22.04",
+  "macaddress": "00:0c:29:69:60:29",
+  "macaddress_enp1s1": "00:0c:29:69:60:29",
+  "manufacturer": "VMware, Inc.",
+  "memory": {
+    "system": {
+      "available": "730.24 MiB",
+      "available_bytes": 765710336,
+      "capacity": "24.27%",
+      "total": "964.30 MiB",
+      "total_bytes": 1011146752,
+      "used": "234.07 MiB",
+      "used_bytes": 245436416
+    }
+  },
+  "memoryfree": "730.24 MiB",
+  "memoryfree_mb": 730.23828125,
+  "memorysize": "964.30 MiB",
+  "memorysize_mb": 964.3046875,
+  "mountpoints": {
+    "/": {
+      "available": "6.71 GiB",
+      "available_bytes": 7203643392,
+      "capacity": "14.26%",
+      "device": "/dev/mapper/system--vg-system--lv",
+      "filesystem": "ext4",
+      "options": [
+        "rw",
+        "relatime"
+      ],
+      "size": "8.27 GiB",
+      "size_bytes": 8874479616,
+      "used": "1.12 GiB",
+      "used_bytes": 1197928448
+    },
+    "/boot": {
+      "available": "787.66 MiB",
+      "available_bytes": 825917440,
+      "capacity": "13.08%",
+      "device": "/dev/nvme0n1p2",
+      "filesystem": "ext4",
+      "options": [
+        "rw",
+        "relatime"
+      ],
+      "size": "973.42 MiB",
+      "size_bytes": 1020702720,
+      "used": "118.56 MiB",
+      "used_bytes": 124321792
+    },
+    "/boot/efi": {
+      "available": "507.36 MiB",
+      "available_bytes": 532008960,
+      "capacity": "0.71%",
+      "device": "/dev/nvme0n1p1",
+      "filesystem": "vfat",
+      "options": [
+        "rw",
+        "relatime",
+        "fmask=0022",
+        "dmask=0022",
+        "codepage=437",
+        "iocharset=iso8859-1",
+        "shortname=mixed",
+        "errors=remount-ro"
+      ],
+      "size": "510.98 MiB",
+      "size_bytes": 535805952,
+      "used": "3.62 MiB",
+      "used_bytes": 3796992
+    },
+    "/dev": {
+      "available": "416.96 MiB",
+      "available_bytes": 437211136,
+      "capacity": "0%",
+      "device": "udev",
+      "filesystem": "devtmpfs",
+      "options": [
+        "rw",
+        "nosuid",
+        "relatime",
+        "size=426964k",
+        "nr_inodes=106741",
+        "mode=755",
+        "inode64"
+      ],
+      "size": "416.96 MiB",
+      "size_bytes": 437211136,
+      "used": "0 bytes",
+      "used_bytes": 0
+    },
+    "/dev/hugepages": {
+      "available": "0 bytes",
+      "available_bytes": 0,
+      "capacity": "100%",
+      "device": "hugetlbfs",
+      "filesystem": "hugetlbfs",
+      "options": [
+        "rw",
+        "relatime",
+        "pagesize=2M"
+      ],
+      "size": "0 bytes",
+      "size_bytes": 0,
+      "used": "0 bytes",
+      "used_bytes": 0
+    },
+    "/dev/mqueue": {
+      "available": "0 bytes",
+      "available_bytes": 0,
+      "capacity": "100%",
+      "device": "mqueue",
+      "filesystem": "mqueue",
+      "options": [
+        "rw",
+        "nosuid",
+        "nodev",
+        "noexec",
+        "relatime"
+      ],
+      "size": "0 bytes",
+      "size_bytes": 0,
+      "used": "0 bytes",
+      "used_bytes": 0
+    },
+    "/dev/pts": {
+      "available": "0 bytes",
+      "available_bytes": 0,
+      "capacity": "100%",
+      "device": "devpts",
+      "filesystem": "devpts",
+      "options": [
+        "rw",
+        "nosuid",
+        "noexec",
+        "relatime",
+        "gid=5",
+        "mode=620",
+        "ptmxmode=000"
+      ],
+      "size": "0 bytes",
+      "size_bytes": 0,
+      "used": "0 bytes",
+      "used_bytes": 0
+    },
+    "/dev/shm": {
+      "available": "482.15 MiB",
+      "available_bytes": 505573376,
+      "capacity": "0%",
+      "device": "tmpfs",
+      "filesystem": "tmpfs",
+      "options": [
+        "rw",
+        "nosuid",
+        "nodev",
+        "inode64"
+      ],
+      "size": "482.15 MiB",
+      "size_bytes": 505573376,
+      "used": "0 bytes",
+      "used_bytes": 0
+    },
+    "/mnt/vagrant-mounts/1000-1001": {
+      "available": "0 bytes",
+      "available_bytes": 0,
+      "capacity": "100%",
+      "device": "vmhgfs-fuse",
+      "filesystem": "fuse.vmhgfs-fuse",
+      "options": [
+        "rw",
+        "nosuid",
+        "nodev",
+        "relatime",
+        "user_id=0",
+        "group_id=0",
+        "default_permissions",
+        "allow_other"
+      ],
+      "size": "0 bytes",
+      "size_bytes": 0,
+      "used": "0 bytes",
+      "used_bytes": 0
+    },
+    "/run": {
+      "available": "95.65 MiB",
+      "available_bytes": 100298752,
+      "capacity": "0.81%",
+      "device": "tmpfs",
+      "filesystem": "tmpfs",
+      "options": [
+        "rw",
+        "nosuid",
+        "nodev",
+        "noexec",
+        "relatime",
+        "size=98748k",
+        "mode=755",
+        "inode64"
+      ],
+      "size": "96.43 MiB",
+      "size_bytes": 101117952,
+      "used": "800.00 KiB",
+      "used_bytes": 819200
+    },
+    "/run/credentials/systemd-sysusers.service": {
+      "available": "0 bytes",
+      "available_bytes": 0,
+      "capacity": "100%",
+      "device": "none",
+      "filesystem": "ramfs",
+      "options": [
+        "ro",
+        "nosuid",
+        "nodev",
+        "noexec",
+        "relatime",
+        "mode=700"
+      ],
+      "size": "0 bytes",
+      "size_bytes": 0,
+      "used": "0 bytes",
+      "used_bytes": 0
+    },
+    "/run/lock": {
+      "available": "5.00 MiB",
+      "available_bytes": 5242880,
+      "capacity": "0%",
+      "device": "tmpfs",
+      "filesystem": "tmpfs",
+      "options": [
+        "rw",
+        "nosuid",
+        "nodev",
+        "noexec",
+        "relatime",
+        "size=5120k",
+        "inode64"
+      ],
+      "size": "5.00 MiB",
+      "size_bytes": 5242880,
+      "used": "0 bytes",
+      "used_bytes": 0
+    },
+    "/run/user/1000": {
+      "available": "96.43 MiB",
+      "available_bytes": 101113856,
+      "capacity": "0%",
+      "device": "tmpfs",
+      "filesystem": "tmpfs",
+      "options": [
+        "rw",
+        "nosuid",
+        "nodev",
+        "relatime",
+        "size=98744k",
+        "nr_inodes=24686",
+        "mode=700",
+        "uid=1000",
+        "gid=1001",
+        "inode64"
+      ],
+      "size": "96.43 MiB",
+      "size_bytes": 101113856,
+      "used": "0 bytes",
+      "used_bytes": 0
+    },
+    "/vagrant": {
+      "available": "851.95 GiB",
+      "available_bytes": 914779013120,
+      "capacity": "8.03%",
+      "device": "vmhgfs-fuse",
+      "filesystem": "fuse.vmhgfs-fuse",
+      "options": [
+        "rw",
+        "nosuid",
+        "nodev",
+        "relatime",
+        "user_id=0",
+        "group_id=0",
+        "default_permissions",
+        "allow_other"
+      ],
+      "size": "926.35 GiB",
+      "size_bytes": 994662584320,
+      "used": "74.40 GiB",
+      "used_bytes": 79883571200
+    }
+  },
+  "mtu_enp1s1": 1500,
+  "mtu_lo": 65536,
+  "netmask": "255.255.255.0",
+  "netmask6": "ffff:ffff:ffff:ffff::",
+  "netmask6_enp1s1": "ffff:ffff:ffff:ffff::",
+  "netmask6_lo": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+  "netmask_enp1s1": "255.255.255.0",
+  "netmask_lo": "255.0.0.0",
+  "network": "192.168.188.0",
+  "network6": "fe80::",
+  "network6_enp1s1": "fe80::",
+  "network6_lo": "::1",
+  "network_enp1s1": "192.168.188.0",
+  "network_lo": "127.0.0.0",
+  "networking": {
+    "dhcp": "192.168.188.254",
+    "domain": "localdev",
+    "fqdn": "template.localdev",
+    "hostname": "template",
+    "interfaces": {
+      "enp1s1": {
+        "bindings": [
+          {
+            "address": "192.168.188.218",
+            "netmask": "255.255.255.0",
+            "network": "192.168.188.0"
+          }
+        ],
+        "bindings6": [
+          {
+            "address": "fe80::20c:29ff:fe69:6029",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "network": "fe80::",
+            "scope6": "link",
+            "flags": [
+              "permanent"
+            ]
+          }
+        ],
+        "dhcp": "192.168.188.254",
+        "ip": "192.168.188.218",
+        "ip6": "fe80::20c:29ff:fe69:6029",
+        "mac": "00:0c:29:69:60:29",
+        "mtu": 1500,
+        "netmask": "255.255.255.0",
+        "netmask6": "ffff:ffff:ffff:ffff::",
+        "network": "192.168.188.0",
+        "network6": "fe80::",
+        "scope6": "link"
+      },
+      "lo": {
+        "bindings": [
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "network": "127.0.0.0"
+          }
+        ],
+        "bindings6": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "network": "::1",
+            "scope6": "host",
+            "flags": [
+              "permanent"
+            ]
+          }
+        ],
+        "ip": "127.0.0.1",
+        "ip6": "::1",
+        "mtu": 65536,
+        "netmask": "255.0.0.0",
+        "netmask6": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "network": "127.0.0.0",
+        "network6": "::1",
+        "scope6": "host"
+      }
+    },
+    "ip": "192.168.188.218",
+    "ip6": "fe80::20c:29ff:fe69:6029",
+    "mac": "00:0c:29:69:60:29",
+    "mtu": 1500,
+    "netmask": "255.255.255.0",
+    "netmask6": "ffff:ffff:ffff:ffff::",
+    "network": "192.168.188.0",
+    "network6": "fe80::",
+    "primary": "enp1s1",
+    "scope6": "link"
+  },
+  "operatingsystem": "Ubuntu",
+  "operatingsystemmajrelease": "22.04",
+  "operatingsystemrelease": "22.04",
+  "os": {
+    "architecture": "aarch64",
+    "distro": {
+      "codename": "jammy",
+      "description": "Ubuntu 22.04 LTS",
+      "id": "Ubuntu",
+      "release": {
+        "full": "22.04",
+        "major": "22.04"
+      }
+    },
+    "family": "Debian",
+    "hardware": "aarch64",
+    "name": "Ubuntu",
+    "release": {
+      "full": "22.04",
+      "major": "22.04"
+    },
+    "selinux": {
+      "enabled": false
+    }
+  },
+  "osfamily": "Debian",
+  "partitions": {
+    "/dev/mapper/system--vg-system--lv": {
+      "filesystem": "ext4",
+      "mount": "/",
+      "size": "8.50 GiB",
+      "size_bytes": 9122611200,
+      "uuid": "12636d00-1a25-405e-b5a2-087c51099729"
+    },
+    "/dev/nvme0n1p1": {
+      "filesystem": "vfat",
+      "mount": "/boot/efi",
+      "partuuid": "9c998de7-3613-410f-8950-4c7cd777042a",
+      "size": "512.00 MiB",
+      "size_bytes": 536870912,
+      "uuid": "4C68-A399"
+    },
+    "/dev/nvme0n1p2": {
+      "filesystem": "ext4",
+      "mount": "/boot",
+      "partuuid": "b8689f0b-f57b-44a1-ae08-e06c61b52626",
+      "size": "1.00 GiB",
+      "size_bytes": 1073741824,
+      "uuid": "aa5b452c-0669-4b0f-98a3-95ccb37ae17e"
+    },
+    "/dev/nvme0n1p3": {
+      "filesystem": "LVM2_member",
+      "partuuid": "9b91d612-fab7-4bb1-b11d-4656ddc62440",
+      "size": "8.50 GiB",
+      "size_bytes": 9124708352,
+      "uuid": "XH2pq0-Z3DV-Lxmo-05oN-Tbld-88fc-93lFRs"
+    }
+  },
+  "path": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/opt/puppetlabs/bin",
+  "physicalprocessorcount": 1,
+  "processorcount": 2,
+  "processors": {
+    "cores": 2,
+    "count": 2,
+    "isa": "aarch64",
+    "models": [
+
+    ],
+    "physicalcount": 1,
+    "threads": 1
+  },
+  "productname": "VBSA",
+  "puppetversion": "7.16.0",
+  "ruby": {
+    "platform": "aarch64-linux",
+    "sitedir": "/opt/puppetlabs/puppet/lib/ruby/site_ruby/2.7.0",
+    "version": "2.7.6"
+  },
+  "rubyplatform": "aarch64-linux",
+  "rubysitedir": "/opt/puppetlabs/puppet/lib/ruby/site_ruby/2.7.0",
+  "rubyversion": "2.7.6",
+  "scope6": "link",
+  "scope6_enp1s1": "link",
+  "scope6_lo": "host",
+  "selinux": false,
+  "ssh": {
+    "dsa": {
+      "fingerprints": {
+        "sha1": "SSHFP 2 1 180bc7c0b186073236d0c7ca900e8a26446b0573",
+        "sha256": "SSHFP 2 2 7a17f45928a5aa5a5a762b3f70c5e230a580a09e69198116a676cfd5cc55a79c"
+      },
+      "key": "AAAAB3NzaC1kc3MAAACBAOcOSKALsIneutqYO+TQ/LYHAyyRiVgeuHHqKIANxArqduOjVNHrapfLMK528GNy+IsBCwIT4Smg9vBSWWpxrmEi/9m684rIa3Z1k3FjPZiRD4/5qyfo9WVVfK4/bx4cBfdEQYrouEpNuTxeH737K0zh1w0ZPlesqpmNVoI+/kRbAAAAFQCoGM63C/1YjRdbns3Vs8vi0OPJCwAAAIB2eeu0oo7c5QrEblk0l9o4m0jB4XcSponQCBYBLmMciI2/iZBJ46im1G9xU+GU7p7vhuxzQo09KREGK1DcItcDXIaJDCAInGmqc6rcQgP7ln2Qk2C2PU+wG2b0L4QAh1VMhfD5yLpsj/wYFyLXEOY2r7rJe5VOj81TrdAxmm7OvgAAAIEAim7Oe+/187SQc9E2uBxPxhYu8lWoUNkHaOjU3Cb6SsIFw5Q68wzRWMG1vZ0Xtv8FJAigKFYB0rycY49JUHxKHq2bzm2nAkrjl58hBlI1176gLHHunxX3p+3/4o+I/iHeAQ0Y1Y+amsnsNzyX905KEAM2+orTw3C8vEHNCw9MZyc=",
+      "type": "ssh-dss"
+    },
+    "ecdsa": {
+      "fingerprints": {
+        "sha1": "SSHFP 3 1 dc2c7a420f378194f366117e232e57bd57b55388",
+        "sha256": "SSHFP 3 2 3bd0d81048a9e1398df9f8285dcfb561e8c4cc7855e5f234cee07971ff5e518f"
+      },
+      "key": "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGU7yUebVdS/fkdf37op/wQV1u4w+mdktZWmGhULXDIfqwPAqPAPjCpC0gvw8AcAUDCFf4lZGrWafRZmaJqdRNU=",
+      "type": "ecdsa-sha2-nistp256"
+    },
+    "ed25519": {
+      "fingerprints": {
+        "sha1": "SSHFP 4 1 93f8cc0f977f73cf7529c84c0e5abc8b7f3233a7",
+        "sha256": "SSHFP 4 2 8d43346df064f1ebe9a93102863463397869a51c3e0b764a326ff842f29a273a"
+      },
+      "key": "AAAAC3NzaC1lZDI1NTE5AAAAIC028mctOpVoHyU2fCNFeSBMKK7nANriOngLd1Hu2tOQ",
+      "type": "ssh-ed25519"
+    },
+    "rsa": {
+      "fingerprints": {
+        "sha1": "SSHFP 1 1 d715ad2345359c86d2729fff6c1ccfc223f9379d",
+        "sha256": "SSHFP 1 2 4beba1ca06eb079c0dac61d7096f8b7177cb8b562143246d509f5798ecbab35b"
+      },
+      "key": "AAAAB3NzaC1yc2EAAAADAQABAAABgQDAaH89unDVvcaOoxZzQXa/o0XMdBRp2lji9FVoebPn5ONdTaLBhSrbIqUNCNFXgwcRbBD9DYPU97SFTNSg+vqHt+SApmJ98VNMLnkF+ZnXr+vDI1V88QKbi0jPNkZiC+BFDpjmgEmMSSDzD751u5EguYm26By2+gajZag7lmtiZ3eKAJIHufRNu8lVefpwul5vYgb3HJRSB9bF1ta4/+1Wad2eTBcppM0q4y6IFTPaOkKm7qw9ia06mi1qDx9HnbXQSdg9qsW4+zdwGCMKBwlMlIyNAjl9E5Epai2q/GswgO2MEi+ruE43PwHJMpwCJTmebGyLAmOnjT1wbyqOqUEdVdDR5xgwlLB4yqFV+SSNKejrXDD2DJ/3S1/YSRGM+G9Y/zTM2UJGJaSJwLVxXTEBHXafmmBggMNbMvhOH+8r+MIvt78O2qKp3gD2yTpNWArY2x2eAQU3RXXTXtQaCsjVpn+Itv0LYUFOSEom5V9yNEkKYQkEB61oxHKvnlfyn2k=",
+      "type": "ssh-rsa"
+    }
+  },
+  "sshdsakey": "AAAAB3NzaC1kc3MAAACBAOcOSKALsIneutqYO+TQ/LYHAyyRiVgeuHHqKIANxArqduOjVNHrapfLMK528GNy+IsBCwIT4Smg9vBSWWpxrmEi/9m684rIa3Z1k3FjPZiRD4/5qyfo9WVVfK4/bx4cBfdEQYrouEpNuTxeH737K0zh1w0ZPlesqpmNVoI+/kRbAAAAFQCoGM63C/1YjRdbns3Vs8vi0OPJCwAAAIB2eeu0oo7c5QrEblk0l9o4m0jB4XcSponQCBYBLmMciI2/iZBJ46im1G9xU+GU7p7vhuxzQo09KREGK1DcItcDXIaJDCAInGmqc6rcQgP7ln2Qk2C2PU+wG2b0L4QAh1VMhfD5yLpsj/wYFyLXEOY2r7rJe5VOj81TrdAxmm7OvgAAAIEAim7Oe+/187SQc9E2uBxPxhYu8lWoUNkHaOjU3Cb6SsIFw5Q68wzRWMG1vZ0Xtv8FJAigKFYB0rycY49JUHxKHq2bzm2nAkrjl58hBlI1176gLHHunxX3p+3/4o+I/iHeAQ0Y1Y+amsnsNzyX905KEAM2+orTw3C8vEHNCw9MZyc=",
+  "sshecdsakey": "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGU7yUebVdS/fkdf37op/wQV1u4w+mdktZWmGhULXDIfqwPAqPAPjCpC0gvw8AcAUDCFf4lZGrWafRZmaJqdRNU=",
+  "sshed25519key": "AAAAC3NzaC1lZDI1NTE5AAAAIC028mctOpVoHyU2fCNFeSBMKK7nANriOngLd1Hu2tOQ",
+  "sshfp_dsa": "SSHFP 2 1 180bc7c0b186073236d0c7ca900e8a26446b0573\nSSHFP 2 2 7a17f45928a5aa5a5a762b3f70c5e230a580a09e69198116a676cfd5cc55a79c",
+  "sshfp_ecdsa": "SSHFP 3 1 dc2c7a420f378194f366117e232e57bd57b55388\nSSHFP 3 2 3bd0d81048a9e1398df9f8285dcfb561e8c4cc7855e5f234cee07971ff5e518f",
+  "sshfp_ed25519": "SSHFP 4 1 93f8cc0f977f73cf7529c84c0e5abc8b7f3233a7\nSSHFP 4 2 8d43346df064f1ebe9a93102863463397869a51c3e0b764a326ff842f29a273a",
+  "sshfp_rsa": "SSHFP 1 1 d715ad2345359c86d2729fff6c1ccfc223f9379d\nSSHFP 1 2 4beba1ca06eb079c0dac61d7096f8b7177cb8b562143246d509f5798ecbab35b",
+  "sshrsakey": "AAAAB3NzaC1yc2EAAAADAQABAAABgQDAaH89unDVvcaOoxZzQXa/o0XMdBRp2lji9FVoebPn5ONdTaLBhSrbIqUNCNFXgwcRbBD9DYPU97SFTNSg+vqHt+SApmJ98VNMLnkF+ZnXr+vDI1V88QKbi0jPNkZiC+BFDpjmgEmMSSDzD751u5EguYm26By2+gajZag7lmtiZ3eKAJIHufRNu8lVefpwul5vYgb3HJRSB9bF1ta4/+1Wad2eTBcppM0q4y6IFTPaOkKm7qw9ia06mi1qDx9HnbXQSdg9qsW4+zdwGCMKBwlMlIyNAjl9E5Epai2q/GswgO2MEi+ruE43PwHJMpwCJTmebGyLAmOnjT1wbyqOqUEdVdDR5xgwlLB4yqFV+SSNKejrXDD2DJ/3S1/YSRGM+G9Y/zTM2UJGJaSJwLVxXTEBHXafmmBggMNbMvhOH+8r+MIvt78O2qKp3gD2yTpNWArY2x2eAQU3RXXTXtQaCsjVpn+Itv0LYUFOSEom5V9yNEkKYQkEB61oxHKvnlfyn2k=",
+  "system_uptime": {
+    "days": 0,
+    "hours": 1,
+    "seconds": 7019,
+    "uptime": "1:56 hours"
+  },
+  "timezone": "CEST",
+  "uptime": "1:56 hours",
+  "uptime_days": 0,
+  "uptime_hours": 1,
+  "uptime_seconds": 7019,
+  "virtual": "vmware"
+}
