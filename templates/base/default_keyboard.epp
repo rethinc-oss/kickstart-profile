@@ -1,0 +1,10 @@
+# KEYBOARD CONFIGURATION FILE (managed by Puppet)
+
+# Consult the keyboard(5) manual page.
+
+XKBMODEL="pc105"
+XKBLAYOUT="<%= $puppet_profiles::base::ubuntu::keyboard_layout %>"
+XKBVARIANT="<%= $puppet_profiles::base::ubuntu::keyboard_variant %>"
+XKBOPTIONS="<%= $puppet_profiles::base::ubuntu::keyboard_options %>"
+
+BACKSPACE="guess"

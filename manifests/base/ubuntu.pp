@@ -20,16 +20,32 @@
 #   Specifies the time(s) 'unattended-upgrade' should be executed by the system.
 # @param unattended_upgrade_random_delay,
 #   Value of the 'RandomizedDelaySec=' directive of the 'apt-daily-upgrade' systemd timer.
+# @param keyboard_layout
+#   The keyboard layout to use.
+# @param keyboard_variant
+#   The keyboard varaint to use
+# @param keyboard_options
+#   The keyboard options to use.
+# @param locales_available
+#   The system locales available.
+# @param locales_available
+#   The default active system locale.
 #
 # @see https://www.freedesktop.org/software/systemd/man/systemd.timer.html#OnCalendar=
 # @see https://www.freedesktop.org/software/systemd/man/systemd.timer.html#RandomizedDelaySec=
 # 
 class puppet_profiles::base::ubuntu (
-    String  $unattended_update_time,
-    String  $unattended_update_random_delay,
-    Boolean $unattended_upgrade,
-    String  $unattended_upgrade_time,
-    String  $unattended_upgrade_random_delay,
+  String        $unattended_update_time,
+  String        $unattended_update_random_delay,
+  Boolean       $unattended_upgrade,
+  String        $unattended_upgrade_time,
+  String        $unattended_upgrade_random_delay,
+  String        $keyboard_layout,
+  String        $keyboard_variant,
+  String        $keyboard_options,
+  Array[String] $locales_available,
+  String        $locales_default,
+
 ){
   assert_private("Use of private class ${name} by ${caller_module_name}")
 
@@ -40,10 +56,6 @@ class puppet_profiles::base::ubuntu (
   if $_distro_version != '22.04' {
     fail("The operating system '${puppet_profiles::base::os_report_name}' is not supported by this module!")
   }
-
-#  if $caller_module_name != $module_name {
-#    fail("Use of private class ${name} by ${caller_module_name}")
-#  }
 
   #############################################################################
   ### APT & System-Update Configuration
@@ -91,5 +103,65 @@ class puppet_profiles::base::ubuntu (
     unit     => 'apt-daily-upgrade.timer',
     filename => 'override-triggertime.conf',
     content  => epp('puppet_profiles/base/apt-daily-upgrade-override.epp'),
+  }
+
+  #############################################################################
+  ### Configure the core locale and language settings
+  #############################################################################
+
+  $keyboard_pkgs = ['console-setup', 'keyboard-configuration']
+  ensure_packages($keyboard_pkgs)
+
+  file { 'keyboard::configfile':
+    ensure  => 'file',
+    path    => '/etc/default/keyboard',
+    content => epp('puppet_profiles/base/default_keyboard.epp'),
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
+    require => Package[$keyboard_pkgs]
+  }
+
+  exec { 'keyboard::apply::config':
+    command     => '/usr/bin/setupcon --save --force --keyboard-only',
+    subscribe   => [ File['keyboard::configfile'] ],
+    refreshonly => true,
+  }
+
+  $locales_pkgs = ['locales']
+  ensure_packages($locales_pkgs)
+
+  file { 'locale::configfile::localegen':
+    ensure  => present,
+    path    => '/etc/locale.gen',
+    content => epp('puppet_profiles/base/locale.gen.epp'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => Package[$locales_pkgs],
+  }
+
+  exec { 'locale::apply::localegen':
+    command     => '/usr/sbin/locale-gen',
+    subscribe   => [ File['locale::configfile::localegen'] ],
+    refreshonly => true,
+    require     => Package[$locales_pkgs],
+  }
+
+  file { 'locale::configfile::default':
+    ensure  => present,
+    path    => '/etc/default/locale',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => epp('puppet_profiles/base/default_locale.epp'),
+    require => Package[$locales_pkgs],
+  }
+
+  exec { 'locale::apply::update-locale':
+    command     => '/usr/sbin/update-locale',
+    subscribe   => [ File['locale::configfile::default'] ],
+    refreshonly => true,
+    require     => Package[$locales_pkgs],
   }
 }
