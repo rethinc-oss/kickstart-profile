@@ -1,0 +1,5 @@
+[Timer]
+OnCalendar=
+OnCalendar=<%= $puppet_profiles::base::ubuntu::unattended_upgrade_time %>
+RandomizedDelaySec=<%= $puppet_profiles::base::ubuntu::unattended_upgrade_random_delay %>
+Persistent=false

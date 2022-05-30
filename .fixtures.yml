@@ -1,0 +1,18 @@
+---
+fixtures:
+  forge_modules:
+    stdlib:
+      repo: "puppetlabs/stdlib"
+      ref: "8.2.0"
+    apt:
+      repo: "puppetlabs/apt"
+      ref: "8.3.0"
+    unattended_upgrades:
+      repo: "puppet/unattended_upgrades"
+      ref: "6.0.0"
+    systemd:
+      repo: "puppet/systemd"
+      ref: "3.8.0"
+    inifile:
+      repo: "puppetlabs/inifile"
+      ref: "5.3.0"

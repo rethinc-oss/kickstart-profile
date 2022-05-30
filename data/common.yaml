@@ -1,0 +1,6 @@
+---
+puppet_profiles::base::ubuntu::unattended_update_time: '00:00'
+puppet_profiles::base::ubuntu::unattended_update_random_delay: '15m'
+puppet_profiles::base::ubuntu::unattended_upgrade: false
+puppet_profiles::base::ubuntu::unattended_upgrade_time: '01:00'
+puppet_profiles::base::ubuntu::unattended_upgrade_random_delay: '30m'

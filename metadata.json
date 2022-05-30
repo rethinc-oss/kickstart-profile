@@ -1,22 +1,27 @@
 {
-  "name": "rethinc-puppet-profiles",
+  "name": "rethinc-puppet_profiles",
   "version": "0.1.0",
   "author": "Rethinc - Software Engineering Services",
   "summary": "Corporate Puppet Profiles Module",
   "license": "proprietary",
   "source": "https://github.com/rethinc-oss/puppet-profiles",
   "dependencies": [
+    { "name":"puppetlabs/stdlib", "version_requirement":"8.2.0" },
+    { "name":"puppetlabs/apt", "version_requirement":"8.3.0" },
+    { "name":"puppet/unattended_upgrades", "version_requirement":"6.0.0" },
+    { "name":"puppet/systemd", "version_requirement":"3.8.0" },
+    { "name":"puppetlabs/inifile", "version_requirement":"5.3.0" }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 6.21.0 < 8.0.0"
+      "version_requirement": ">= 7.16.0 < 8.0.0"
     }
   ],
   "operatingsystem_support": [
     {
       "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": ["22.04","20.04"]
+      "operatingsystemrelease": ["22.04"]
     }
   ],
   "pdk-version": "0.5.0-d365a90",
