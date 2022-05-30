@@ -1,5 +1,9 @@
 ---
 fixtures:
+  repositories:
+    facts: 'https://github.com/puppetlabs/puppetlabs-facts.git'
+    puppet_agent: 'https://github.com/puppetlabs/puppetlabs-puppet_agent.git'
+    provision: 'https://github.com/puppetlabs/provision.git'
   forge_modules:
     stdlib:
       repo: "puppetlabs/stdlib"
@@ -13,6 +17,9 @@ fixtures:
     systemd:
       repo: "puppet/systemd"
       ref: "3.8.0"
+    chrony:
+      repo: "puppet/chrony"
+      ref: "2.4.0"
     inifile:
       repo: "puppetlabs/inifile"
       ref: "5.3.0"
