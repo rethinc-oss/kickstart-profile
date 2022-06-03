@@ -15,6 +15,11 @@ describe 'puppet_profiles::base::ubuntu' do
           'apt_update_last_success' => -1,
         })
       end
+      let(:params) do
+        {
+          'admin_user_password' => 'PASSWORD',
+        }
+      end
 
       $update_dropin_file    = '/etc/systemd/system/apt-daily.timer.d/override-triggertime.conf'
       $upgrade_dropin_file   = '/etc/systemd/system/apt-daily-upgrade.timer.d/override-triggertime.conf'
@@ -37,7 +42,12 @@ describe 'puppet_profiles::base::ubuntu' do
       end
 
       context 'with custom update parameters' do
-        let(:params) { {'unattended_update_time' => $custom_time, 'unattended_update_random_delay' => $custom_delay} }
+        let(:params) do
+          super().merge({
+            'unattended_update_time' => $custom_time,
+            'unattended_update_random_delay' => $custom_delay,
+          })
+        end
 
         it do
           is_expected.to contain_file($update_dropin_file)
@@ -47,7 +57,11 @@ describe 'puppet_profiles::base::ubuntu' do
       end
 
       context 'with unattended_upgrade enabled' do
-        let(:params) { {'unattended_upgrade' => true} }
+        let(:params) do
+          super().merge({
+            'unattended_upgrade' => true,
+          })
+        end
 
         it do
           is_expected.to contain_file($upgrade_dropin_file)
@@ -55,7 +69,12 @@ describe 'puppet_profiles::base::ubuntu' do
         end
 
         context 'with custom upgrade parameters' do
-          let(:params) { {'unattended_upgrade_time' => $custom_time, 'unattended_upgrade_random_delay' => $custom_delay} }
+          let(:params) do
+            super().merge({
+              'unattended_upgrade_time' => $custom_time,
+              'unattended_upgrade_random_delay' => $custom_delay,
+            })
+          end
 
           it do
             is_expected.to contain_file($upgrade_dropin_file)
@@ -65,11 +84,13 @@ describe 'puppet_profiles::base::ubuntu' do
         end
 
         context 'with custom keyboard layout' do
-          let(:params) {{
-            'keyboard_layout' => $custom_kb_layout,
-            'keyboard_variant' => $custom_kb_variant,
-            'keyboard_options' => $custom_kb_options
-          }}
+          let(:params) do
+            super().merge({
+              'keyboard_layout' => $custom_kb_layout,
+              'keyboard_variant' => $custom_kb_variant,
+              'keyboard_options' => $custom_kb_options,
+            })
+          end
       
           it do
             is_expected.to contain_file('keyboard::configfile')
@@ -80,14 +101,59 @@ describe 'puppet_profiles::base::ubuntu' do
         end
 
         context 'with custom default locale' do
-          let(:params) {{
-            'locales_default' => $custom_locale_default,
-          }}
+          let(:params) do
+            super().merge({
+              'locales_default' => $custom_locale_default,
+            })
+          end
       
           it do
             is_expected.to contain_file('locale::configfile::default')
               .with_content(/^LANG=\"#{$custom_locale_default}\"$/)
           end
+        end
+      end
+
+      context 'admin user with public key' do
+        let(:params) do
+          super().merge({
+            'admin_user_public_keys' => ['alice@example.com'],
+            'admin_user_public_keydefs' => {
+              'alice@example.com' => {
+                'type'    => 'ssh-ed25519',
+                'key'     => 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+                'comment' => 'Alice (Login Key)',
+              },
+              'bob@example.com' => {
+                'type'    => 'ssh-ed25519',
+                'key'     => 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+                'comment' => 'Bob (Login Key)',
+              },
+            }
+          })
+        end
+        it {
+          is_expected.to contain_user('sysop').with({
+            'comment'    => 'System Operator',
+            'managehome' => true,
+          })
+          is_expected.to contain_ssh_authorized_key('sysop (alice@example.com)').with({
+            'type' => 'ssh-ed25519',
+            'key'  => 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+            'name' => 'Alice (Login Key)',
+          })
+        }
+      end
+
+      context 'with admin user public key definition missing' do
+        let(:params) do
+          super().merge({
+            'admin_user_public_keys' => ['alice@example.com']
+          })
+        end
+    
+        it do
+          is_expected.to compile.and_raise_error(/Key for alice@example.com not found!/)
         end
       end
     end

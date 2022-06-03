@@ -1,4 +1,5 @@
 ---
+puppet_profiles::base::ssh_public_keys: null
 puppet_profiles::base::ubuntu::unattended_update_time: '00:00'
 puppet_profiles::base::ubuntu::unattended_update_random_delay: '15m'
 puppet_profiles::base::ubuntu::unattended_upgrade: false
@@ -11,3 +12,9 @@ puppet_profiles::base::ubuntu::locales_available: ["en_US.UTF-8 UTF-8"]
 puppet_profiles::base::ubuntu::locales_default: "en_US.UTF-8"
 puppet_profiles::base::ubuntu::timedate_timezone: "Europe/Berlin"
 puppet_profiles::base::ubuntu::timedate_rtc_utc: true
+puppet_profiles::base::ubuntu::admin_group: "operator"
+puppet_profiles::base::ubuntu::admin_user_name: "System Operator"
+puppet_profiles::base::ubuntu::admin_user_login: "sysop"
+puppet_profiles::base::ubuntu::admin_user_addon_groups: ["%{lookup('puppet_profiles::base::ubuntu::admin_group')}"]
+puppet_profiles::base::ubuntu::admin_user_public_keys: null
+puppet_profiles::base::ubuntu::admin_user_public_keydefs: "%{alias('puppet_profiles::base::ssh_public_keys')}"

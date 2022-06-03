@@ -34,24 +34,58 @@
 #   The system timezone.
 # @param ltimedate_rtc_utc
 #   If the Hardware RTC is set to UTC time.
+# @param admin_user_name
+#   The descriptive name of the admin user. Default value: System Operator.
+# @param admin_user_login
+#   The login name of the admin user. Default value: sysop
+# @param admin_user_password
+#   The password of the admin user. Default value: n/a.
+# @param admin_user_addon_groups
+#   An array of groups the admin user should be a member of in addition to
+#   the default group memberships assigned at user creation. By default there is one
+#   group specified, its value is looked up from the profile-level hiera variable
+#   puppet_profiles::base::ubuntu::admin_group. Default value [operator]
+# @param admin_user_public_keys
+#   An array of unique values (usually email addresses). The values are looked up as
+#   keys from the $admin_user_public_keydefs hash. The defined public keys are added as
+#   authorized keys for the account.
+# @param admin_user_public_keydefs
+#   A Hash containing SSH public-key definitions. By default the content of the hash
+#   is aliased to the shared hiera variable 'puppet_profiles::base::ssh_public_keys'.
+#   This has the advantage that the key definition may be reused by other classes.
+#   
+#     profile::server::ssh::keys:
+#       alice@example.com:
+#         type: ssh-ed25519
+#         key: AAAAC3NzaC1lZdeF54E5AAAAIBKQkiccEOf3yww62zTQwZSPX96eL7zVqPmAF56lnW
+#         comment: Alice (Login Key)
+#       bob@example.com:
+#         type: ssh-ed25519
+#         key: AAAAC3NzaC1lZdeF54E5AAAAIBKQkiccEOf3yww62zTQwZSPX96eL7zVqPmAF56lnW
+#         comment: Bob (Login Key)
 #
 # @see https://www.freedesktop.org/software/systemd/man/systemd.timer.html#OnCalendar=
 # @see https://www.freedesktop.org/software/systemd/man/systemd.timer.html#RandomizedDelaySec=
 # 
 class puppet_profiles::base::ubuntu (
-  String        $unattended_update_time,
-  String        $unattended_update_random_delay,
-  Boolean       $unattended_upgrade,
-  String        $unattended_upgrade_time,
-  String        $unattended_upgrade_random_delay,
-  String        $keyboard_layout,
-  String        $keyboard_variant,
-  String        $keyboard_options,
-  Array[String] $locales_available,
-  String        $locales_default,
-  String        $timedate_timezone,
-  Boolean       $timedate_rtc_utc,
-
+  String                       $unattended_update_time,
+  String                       $unattended_update_random_delay,
+  Boolean                      $unattended_upgrade,
+  String                       $unattended_upgrade_time,
+  String                       $unattended_upgrade_random_delay,
+  String                       $keyboard_layout,
+  String                       $keyboard_variant,
+  String                       $keyboard_options,
+  Array[String]                $locales_available,
+  String                       $locales_default,
+  String                       $timedate_timezone,
+  Boolean                      $timedate_rtc_utc,
+  String                       $admin_user_name,
+  String                       $admin_user_login,
+  String                       $admin_user_password,
+  Optional[Array[String]]      $admin_user_addon_groups,
+  Optional[Array[String]]      $admin_user_public_keys,
+  Optional[Hash[String, Hash]] $admin_user_public_keydefs,
 ){
   assert_private("Use of private class ${name} by ${caller_module_name}")
 
@@ -207,4 +241,42 @@ class puppet_profiles::base::ubuntu (
   }
 
   Service['systemd-timesyncd'] -> Class['::chrony']
+
+  #############################################################################
+  ### Create the admin user
+  #############################################################################
+
+  group { $admin_user_addon_groups:
+    ensure => present,
+  }
+
+  $_admin_user_pw = str2sha512shadow($admin_user_password)
+  $_admin_user_purge_ssh_keys = $admin_user_public_keys != undef
+  $_admin_user_groups = ['adm', 'cdrom', 'sudo', 'dip', 'plugdev', 'netdev'] + $admin_user_addon_groups
+
+  user { $admin_user_login:
+    ensure         => present,
+    groups         => $_admin_user_groups,
+    comment        => $admin_user_name,
+    managehome     => true,
+    password       => Sensitive($_admin_user_pw),
+    purge_ssh_keys => $_admin_user_purge_ssh_keys,
+    require        => [Group[$admin_user_addon_groups]],
+  }
+
+  if ($admin_user_public_keys != undef) {
+    $admin_user_public_keys.each |String $key_id| {
+      if ($admin_user_public_keydefs == undef or $admin_user_public_keydefs[$key_id] == undef) {
+        fail("Key for ${key_id} not found!")
+      } else {
+        ssh_authorized_key { "${admin_user_login} (${key_id})":
+          ensure => present,
+          user   => $admin_user_login,
+          type   => $admin_user_public_keydefs[$key_id]['type'],
+          key    => $admin_user_public_keydefs[$key_id]['key'],
+          name   => $admin_user_public_keydefs[$key_id]['comment'],
+        }
+      }
+    }
+  }
 }
