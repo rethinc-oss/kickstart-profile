@@ -82,35 +82,35 @@ describe 'puppet_profiles::base::ubuntu' do
               .with_content(/^RandomizedDelaySec=#{$custom_delay}$/)
           end
         end
+      end
 
-        context 'with custom keyboard layout' do
-          let(:params) do
-            super().merge({
-              'keyboard_layout' => $custom_kb_layout,
-              'keyboard_variant' => $custom_kb_variant,
-              'keyboard_options' => $custom_kb_options,
-            })
-          end
-      
-          it do
-            is_expected.to contain_file('keyboard::configfile')
-              .with_content(/^XKBLAYOUT=\"#{$custom_kb_layout}\"$/)
-              .with_content(/^XKBVARIANT=\"#{$custom_kb_variant}\"$/)
-              .with_content(/^XKBOPTIONS=\"#{$custom_kb_options}\"$/)
-          end
+      context 'with custom keyboard layout' do
+        let(:params) do
+          super().merge({
+            'keyboard_layout' => $custom_kb_layout,
+            'keyboard_variant' => $custom_kb_variant,
+            'keyboard_options' => $custom_kb_options,
+          })
         end
+    
+        it do
+          is_expected.to contain_file('keyboard::configfile')
+            .with_content(/^XKBLAYOUT=\"#{$custom_kb_layout}\"$/)
+            .with_content(/^XKBVARIANT=\"#{$custom_kb_variant}\"$/)
+            .with_content(/^XKBOPTIONS=\"#{$custom_kb_options}\"$/)
+        end
+      end
 
-        context 'with custom default locale' do
-          let(:params) do
-            super().merge({
-              'locales_default' => $custom_locale_default,
-            })
-          end
-      
-          it do
-            is_expected.to contain_file('locale::configfile::default')
-              .with_content(/^LANG=\"#{$custom_locale_default}\"$/)
-          end
+      context 'with custom default locale' do
+        let(:params) do
+          super().merge({
+            'locales_default' => $custom_locale_default,
+          })
+        end
+    
+        it do
+          is_expected.to contain_file('locale::configfile::default')
+            .with_content(/^LANG=\"#{$custom_locale_default}\"$/)
         end
       end
 
@@ -132,7 +132,8 @@ describe 'puppet_profiles::base::ubuntu' do
             }
           })
         end
-        it {
+
+        it do
           is_expected.to contain_user('sysop').with({
             'comment'    => 'System Operator',
             'managehome' => true,
@@ -142,7 +143,7 @@ describe 'puppet_profiles::base::ubuntu' do
             'key'  => 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
             'name' => 'Alice (Login Key)',
           })
-        }
+        end
       end
 
       context 'with admin user public key definition missing' do
