@@ -101,7 +101,9 @@ class puppet_profiles::base::ubuntu (
   ### APT & System-Update Configuration
   #############################################################################
 
-  ::Apt::Ppa <| |> -> Class['::apt::update'] -> Package <| provider == 'apt' |>
+  ::Apt::Ppa <| |>       -> Class['::apt::update']
+  ::Apt::Source <| |>    -> Class['::apt::update']
+  Class['::apt::update'] -> Package <| provider == 'apt' |>
 
   ### Wait until a running unattended-upgrade or update is finished
 
@@ -279,4 +281,12 @@ class puppet_profiles::base::ubuntu (
       }
     }
   }
+
+  #############################################################################
+  ### The rest...
+  #############################################################################
+
+  ### By default, purge all unmanaged cron entries of a user
+
+  resources { 'cron': purge => 'true' }
 }

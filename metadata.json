@@ -12,7 +12,10 @@
     { "name":"puppet/systemd", "version_requirement":"3.8.0" },
     { "name":"puppet/chrony", "version_requirement":"2.4.0" },
     { "name":"puppetlabs/sshkeys_core", "version_requirement":"2.3.0" },
-    { "name":"puppetlabs/inifile", "version_requirement":"5.3.0" }
+    { "name":"puppet/nginx", "version_requirement":"3.3.0" },
+    { "name":"puppet/letsencrypt", "version_requirement":"8.0.2" },
+    { "name":"puppetlabs/inifile", "version_requirement":"5.3.0" },
+    { "name":"puppetlabs/concat", "version_requirement":"7.2.0" }
   ],
   "requirements": [
     {
