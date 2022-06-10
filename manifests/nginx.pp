@@ -12,9 +12,13 @@ class puppet_profiles::nginx (
   include ::stdlib
 
   class {'::nginx':
-    server_purge   => true,
-    package_source => 'nginx-stable',
-    nginx_version  => pick(fact('nginx_version'), '1.15.0')
+    server_purge           => true,
+    package_source         => 'nginx-stable',
+    nginx_version          => pick(fact('nginx_version'), '1.15.0'),
+    # High values for the bad bot blocker list,
+    # taken from the botblocker configuration
+    names_hash_bucket_size => 256,
+    names_hash_max_size    => 4096,
   }
 
   $_default_fqdn        = 'default.vhost'
@@ -23,6 +27,10 @@ class puppet_profiles::nginx (
   $_default_log         = "/var/log/nginx/${_default_fqdn}.log"
   $_dist_vhost_files    = ['/etc/nginx/sites-enabled/default', '/etc/nginx/sites-available/default', '/etc/nginx/conf.d/default.conf']
   $_dhparam_file        = $generate_dhparams ? { true => '/etc/ssl/certs/dhparam4096.pem', false => undef }
+  $_ips                 = $facts['networking']['interfaces'].reduce([]) |$memo, $value| {
+    $a = $memo + $value[1]['ip'] +  $value[1]['ip6']
+    delete_undef_values($a)
+  }
 
   file{ $_dist_vhost_files:
     ensure => 'absent',
@@ -130,6 +138,105 @@ class puppet_profiles::nginx (
     },
     require                   => [ File[$_dist_vhost_files], Exec['generate_default_sslcert'] ] + ($generate_dhparams ? { true => Exec['generate_dhparams'], false => [] }),
   }
+
+  #############################################################################
+  ### Install NgxBotblocker
+  #############################################################################
+
+  ### Install files
+
+  file { '/etc/nginx/bots.d/':
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+
+  [
+    'install-ngxblocker',
+    'setup-ngxblocker',
+    'update-ngxblocker'
+  ].each |$file| {
+    file { "/usr/local/sbin/${file}":
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0700',
+      content => epp("puppet_profiles/nginx/botblocker/scripts/${file}.epp"),
+      replace => false,
+    }
+  }
+
+  [
+    'botblocker-nginx-settings.conf',
+    'globalblacklist.conf'
+  ].each |$file| {
+    file { "/etc/nginx/conf.d/${file}":
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0600',
+      content => epp("puppet_profiles/nginx/botblocker/conf.d/${file}.epp"),
+      replace => false,
+    }
+  }
+
+  [
+    'bad-referrer-words.conf',
+    'blacklist-ips.conf',
+    'blacklist-user-agents.conf',
+    'blockbots.conf',
+    'custom-bad-referrers.conf',
+    'ddos.conf',
+  ].each |$file| {
+    file { "/etc/nginx/bots.d/${file}":
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0600',
+      content => epp("puppet_profiles/nginx/botblocker/bots.d/${file}.epp"),
+      replace => false,
+      require => File['/etc/nginx/bots.d/'],
+    }
+  }
+
+  ### Install dynamic files
+
+  file { '/etc/nginx/bots.d/whitelist-ips.conf':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0600',
+    content => epp('puppet_profiles/nginx/botblocker/bots.d/whitelist-ips.conf.epp', { ips => $_ips }),
+    require => File['/etc/nginx/bots.d/'],
+  }
+
+  concat { '/etc/nginx/bots.d/whitelist-domains.conf':
+    owner => 'root',
+    group => 'root',
+    mode  => '0600'
+  }
+
+  concat::fragment { 'whitelist_domains_header':
+    target  => '/etc/nginx/bots.d/whitelist-domains.conf',
+    content => epp('puppet_profiles/nginx/botblocker/bots.d/whitelist-domains-header.conf.epp'),
+    order   => '01',
+  }
+
+  concat::fragment { 'whitelist_domains_footer':
+    target  => '/etc/nginx/bots.d/whitelist-domains.conf',
+    content => epp('puppet_profiles/nginx/botblocker/bots.d/whitelist-domains-footer.conf.epp'),
+    order   => '99',
+  }
+
+  ### Update the bot definitions
+
+  systemd::timer { 'ngxblocker-update.timer':
+    timer_content   => epp('puppet_profiles/nginx/botblocker/ngxblocker-update.timer.epp'),
+    service_content => epp('puppet_profiles/nginx/botblocker/ngxblocker-update.service.epp'),
+    active          => true,
+    enable          => true,
+  }
+
+  #############################################################################
+  ### Install Letsencrypt client
+  #############################################################################
 
   file{ ['/var/www/', '/var/www/acme/'] :
     ensure => 'directory',

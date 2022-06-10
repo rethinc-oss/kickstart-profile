@@ -1,0 +1,6 @@
+<%- |
+  Array $domains,
+| -%>
+<% $domains.each |$domain| { -%>
+"~*(?:\b)<%= regsubst($domain, /\./, '\\.', 'G') %>(?:\b)" 0;
+<% } -%>

@@ -1,0 +1,11 @@
+[Unit]
+Description=Run ngxblocker-update daily
+After=network-online.target
+
+[Timer]
+OnCalendar=22:00
+RandomizedDelaySec=30m
+Persistent=false
+
+[Install]
+WantedBy=timers.target

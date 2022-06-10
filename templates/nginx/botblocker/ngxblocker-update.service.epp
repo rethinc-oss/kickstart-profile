@@ -1,0 +1,7 @@
+[Unit]
+Description=Update the ngxblocker data
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/update-ngxblocker -q
+User=root

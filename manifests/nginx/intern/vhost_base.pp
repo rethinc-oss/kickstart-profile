@@ -56,7 +56,11 @@ define puppet_profiles::nginx::intern::vhost_base (
     client_max_body_size      => $max_body_size,
 
     server_cfg_prepend        => {
-      server_tokens => 'off',
+      'server_tokens' => 'off',
+      'include'       => $webroot != undef ? { # lint:ignore:selector_inside_resource
+        true  => ['/etc/nginx/bots.d/blockbots.conf', '/etc/nginx/bots.d/ddos.conf'],
+        false => undef,
+      },
     },
   }
 

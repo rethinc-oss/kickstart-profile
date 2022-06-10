@@ -54,8 +54,8 @@ define puppet_profiles::nginx::vhost::static (
   $_redirect_access_log        = "${log_dir}/${domain}_redirect_access.log"
   $_redirect_error_log         = "${log_dir}/${domain}_redirect_error.log"
 
-  $_https_certificate          = "/etc/letsencrypt/live/${_primary_domain}/fullchain.pem"
-  $_https_certificate_key      = "/etc/letsencrypt/live/${_primary_domain}/privkey.pem"
+  $_https_certificate          = "/etc/letsencrypt/live/${domain}/fullchain.pem"
+  $_https_certificate_key      = "/etc/letsencrypt/live/${domain}/privkey.pem"
 
   $_configuration_reloads      = $https ? {
     true  => ["${domain}_nginx_reload_http", "${domain}_nginx_reload_https"],
@@ -79,6 +79,16 @@ define puppet_profiles::nginx::vhost::static (
     group   => $user,
     mode    => '0750',
     require => User[$user]
+  }
+
+  #############################################################################
+  ### Add vhost domains to ngxblocker whitelist
+  #############################################################################
+
+  concat::fragment { "whitelist_domains_${domain}":
+    target  => '/etc/nginx/bots.d/whitelist-domains.conf',
+    content => epp('puppet_profiles/nginx/botblocker/bots.d/whitelist-domains-domains.conf.epp', { domains => delete_undef_values( [$_primary_domain, $_secondary_domain]) }),
+    order   => '50',
   }
 
   #############################################################################
