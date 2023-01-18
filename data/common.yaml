@@ -21,3 +21,7 @@ puppet_profiles::base::ubuntu::admin_user_public_keydefs: "%{alias('puppet_profi
 puppet_profiles::pebble::pebble_version: "v2.4.0"
 puppet_profiles::nginx::acme_server: "https://acme-v02.api.letsencrypt.org/directory"
 puppet_profiles::nginx::generate_dhparams: true
+puppet_profiles::ssh::server::listen_port: 22
+puppet_profiles::ssh::server::password_authentication: false
+puppet_profiles::ssh::server::sftp_only_enabled: false
+puppet_profiles::ssh::server::allowed_group: "%{lookup('puppet_profiles::base::ubuntu::admin_group')}"

@@ -77,6 +77,9 @@ define puppet_profiles::nginx::vhost::phpfpm (
     pool_php_version      => $php_version,
     pool_php_env_values   => $php_env_vars,
     pool_php_admin_values => $_php_admin_values,
+    require               => [
+      Puppet_profiles::Nginx::Vhost::Static[$title],
+    ],
   }
 
   #############################################################################

@@ -238,11 +238,17 @@ class puppet_profiles::nginx (
   ### Install Letsencrypt client
   #############################################################################
 
-  file{ ['/var/www/', '/var/www/acme/'] :
+  file{ '/var/www/':
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+  -> file{ '/var/www/acme/':
     ensure => 'directory',
     owner  => $nginx::params::daemon_user,
     group  => $nginx::params::daemon_user,
-    mode   => '0750',
+    mode   => '0755',
   }
 
   class { 'letsencrypt':
