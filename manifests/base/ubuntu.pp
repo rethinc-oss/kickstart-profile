@@ -117,6 +117,7 @@ class puppet_profiles::base::ubuntu (
     update => {
       frequency => 'daily',
     },
+    keyserver => 'hkp://keyserver.ubuntu.com:80',
   }
 
   systemd::dropin_file { 'override-apt-update-triggertime':
