@@ -24,8 +24,8 @@ define puppet_profiles::nginx::vhost::static (
   Optional[String] $user_addon_group  = undef,
   Optional[Array[String]] $user_public_keys = undef,
   Optional[Hash[String, Hash]] $user_public_keydefs = lookup('puppet_profiles::base::ssh_public_keys', undef, undef, undef),
-  String $webroot_parent_dir          = $user_dir,
-  String $webroot                     = "${webroot_parent_dir}/htdocs",
+  String $website_dir                 = "${user_dir}/website",
+  String $webroot_dir                 = $website_dir,
   Array[Hash] $cronjobs               = [],
 ){
   if !defined(Class['::puppet_profiles::nginx']) {
@@ -73,7 +73,7 @@ define puppet_profiles::nginx::vhost::static (
     public_keys    => $user_public_keys,
     public_keydefs => $user_public_keydefs,
   }
-  -> file { $webroot:
+  -> file { $website_dir:
     ensure  => 'directory',
     owner   => $user,
     group   => $user,
@@ -151,7 +151,7 @@ define puppet_profiles::nginx::vhost::static (
     https_certificate     => $_https_certificate,
     https_certificate_key => $_https_certificate_key,
     port                  => $https ? { true => $https_port, false => $http_port }, # lint:ignore:selector_inside_resource
-    webroot               => $webroot,
+    webroot_dir           => $webroot_dir,
     access_log            => $_main_access_log,
     error_log             => $_main_error_log,
     max_body_size         => $max_body_size,

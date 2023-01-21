@@ -14,8 +14,8 @@ define puppet_profiles::nginx::vhost::phpfpm (
   Optional[String] $user_addon_group  = undef,
   Optional[Array[String]] $user_public_keys = undef,
   Optional[Hash[String, Hash]] $user_public_keydefs = lookup('puppet_profiles::base::ssh_public_keys', undef, undef, undef),
-  String $webroot_parent_dir          = $user_dir,
-  String $webroot                     = "${webroot_parent_dir}/htdocs",
+  String $website_dir                 = "${user_dir}/website",
+  String $webroot_dir                 = $website_dir,
   Array[Hash] $cronjobs               = [],
   String $php_version                 = undef,
   Array[String] $php_modules          = [],
@@ -102,8 +102,8 @@ define puppet_profiles::nginx::vhost::phpfpm (
     user_addon_group    => $user_addon_group,
     user_public_keys    => $user_public_keys,
     user_public_keydefs => $user_public_keydefs,
-    webroot_parent_dir  => $webroot_parent_dir,
-    webroot             => $webroot,
+    website_dir         => $website_dir,
+    webroot_dir         => $webroot_dir,
     cronjobs            => $cronjobs,
   }
 

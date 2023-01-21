@@ -14,8 +14,8 @@ define puppet_profiles::nginx::vhost::laravel (
   Optional[String] $user_addon_group  = undef,
   Optional[Array[String]] $user_public_keys = undef,
   Optional[Hash[String, Hash]] $user_public_keydefs = lookup('puppet_profiles::base::ssh_public_keys', undef, undef, undef),
-  String $webroot_parent_dir          = $user_dir,
-  String $webroot                     = "${webroot_parent_dir}/public",
+  String $website_dir                 = "${user_dir}/website",
+  String $webroot_dir                 = "${website_dir}/public",
   Array[Hash] $cronjobs               = [],
   String $php_version                 = undef,
   Array[String] $php_modules          = [],
@@ -59,8 +59,8 @@ define puppet_profiles::nginx::vhost::laravel (
     user_addon_group    => $user_addon_group,
     user_public_keys    => $user_public_keys,
     user_public_keydefs => $user_public_keydefs,
-    webroot_parent_dir  => $webroot_parent_dir,
-    webroot             => $webroot,
+    website_dir         => $website_dir,
+    webroot_dir         => $webroot_dir,
     cronjobs            => $cronjobs,
     php_version         => $php_version,
     php_modules         => $_php_modules,
@@ -95,7 +95,7 @@ define puppet_profiles::nginx::vhost::laravel (
   }
 
   cron { "${domain}-laravel-scheduler":
-    command => "cd ${webroot_parent_dir} && php artisan schedule:run >> /dev/null 2>&1",
+    command => "cd ${website_dir} && php artisan schedule:run >> /dev/null 2>&1",
     user    => $user,
   }
 }

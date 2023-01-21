@@ -5,16 +5,16 @@ define puppet_profiles::nginx::intern::vhost_base (
   Optional[String] $https_certificate     = undef,
   Optional[String] $https_certificate_key = undef,
   Integer $port                           = undef,
-  Optional[String] $webroot               = undef,
+  Optional[String] $webroot_dir           = undef,
   Optional[String] $redirect_target       = undef,
   String $access_log                      = undef,
   String $error_log                       = undef,
   String $max_body_size                   = undef,
 ){
-  if $webroot == undef and $redirect_target == undef {
+  if $webroot_dir == undef and $redirect_target == undef {
     fail('You must specify either a webroot or a redirect target for the vhost.')
   }
-  if $webroot != undef and $redirect_target != undef {
+  if $webroot_dir != undef and $redirect_target != undef {
     fail('You munst not specify both a webroot and a redirect target for the vhost.')
   }
 
@@ -31,7 +31,7 @@ define puppet_profiles::nginx::intern::vhost_base (
     autoindex                 => 'off',
     access_log                => $access_log,
     error_log                 => $error_log,
-    www_root                  => $webroot,
+    www_root                  => $webroot_dir,
 
     ssl                       => $https,
     ssl_port                  => $https ? { true => $port, false => undef }, # lint:ignore:selector_inside_resource
@@ -57,7 +57,7 @@ define puppet_profiles::nginx::intern::vhost_base (
 
     server_cfg_prepend        => {
       'server_tokens' => 'off',
-      'include'       => $webroot != undef ? { # lint:ignore:selector_inside_resource
+      'include'       => $webroot_dir != undef ? { # lint:ignore:selector_inside_resource
         true  => ['/etc/nginx/bots.d/blockbots.conf', '/etc/nginx/bots.d/ddos.conf'],
         false => undef,
       },
