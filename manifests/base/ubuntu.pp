@@ -270,7 +270,7 @@ class puppet_profiles::base::ubuntu (
 
   $_admin_user_pw = str2sha512shadow($admin_user_password)
   $_admin_user_purge_ssh_keys = $admin_user_public_keys != undef
-  $_admin_user_groups = ['adm', 'cdrom', 'sudo', 'dip', 'plugdev', 'netdev'] + $admin_user_addon_groups
+  $_admin_user_groups = ['adm', 'cdrom', 'sudo', 'dip', 'plugdev'] + $admin_user_addon_groups
 
   user { $admin_user_login:
     ensure         => present,
