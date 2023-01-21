@@ -50,7 +50,7 @@ define puppet_profiles::nginx::intern::vhost_user (
           user   => $name,
           type   => $public_keydefs[$key_id]['type'],
           key    => $public_keydefs[$key_id]['key'],
-          name   => $public_keydefs[$key_id]['comment'],
+          name   => "${public_keydefs[$key_id]['comment']} - ${title}",
         }
       }
     }
